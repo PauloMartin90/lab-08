@@ -93,9 +93,11 @@ function WeatherKit(object) {
 /////////////////// PARKS INFORMATION ///////////////////
 app.get('/parks', handleGetParks);
 function handleGetParks(req, res) {
-  const parkCode = req.query.formatted_query;
+  const parkCode = req.query.search_query;
+  console.log("🚀 ~ file: server.js ~ line 97 ~ handleGetParks ~ req.query", req.query)
   
-  const url =  `https://developer.nps.gov/api/v1/parks?limit=3&start=0&q=${parkCode}&sort=&api_key=${PARKS_API_KEY}`; // Change token Key
+  // const url =  `https://developer.nps.gov/api/v1/parks?limit=3&start=0&q=${parkCode}&sort=&api_key=${PARKS_API_KEY}`; // Change token Key
+  const url =  `https://developer.nps.gov/api/v1/parks?q=${parkCode}&api_key=${PARKS_API_KEY}`
 
   superagent.get(url) 
   .then(parks_info => {
@@ -111,12 +113,19 @@ function handleGetParks(req, res) {
 }
 function ParkKit (object){
   this.name = object.fullName;
-  this.address = `${object.addresses[0].line1}, ${object.addresses[0].city}, ${object.addresses[0].stateCode}, ${object.addresses[0].postalCode}`;
   this.fee =  object.entranceFees[0].cost ? object.entranceFees[0].cost: 'No Cost';
+  this.address = `${object.addresses[0].line1}, ${object.addresses[0].city}, ${object.addresses[0].stateCode}, ${object.addresses[0].postalCode}` ;
   this.description = object.description;
   this.url = object.url
 }
 
+// function ParkKit (object){
+//   this.name = 'asdf;
+//   this.fee =  asdf;
+//   this.address = asdf;
+//   this.description = asdf;
+//   this.url = asdf
+// }
 
 
 // ============== Initialization ========================
