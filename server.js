@@ -88,7 +88,6 @@ function handleGetWeather(req, res) {
 }); 
 }
 
-
 function WeatherKit(object) {
   this.forecast =  object.weather.description;
   this.time = object.valid_date;
@@ -99,8 +98,7 @@ function WeatherKit(object) {
 app.get('/parks', handleGetParks);
 function handleGetParks(req, res) {
   const parkCode = req.query.search_query.split(',')[0];
-  
-  // const url =  `https://developer.nps.gov/api/v1/parks?limit=3&start=0&q=${parkCode}&sort=&api_key=${PARKS_API_KEY}`; // Change token Key
+
   const url =  `https://developer.nps.gov/api/v1/parks?q=${parkCode}&api_key=${PARKS_API_KEY}`
 
   superagent.get(url) 
